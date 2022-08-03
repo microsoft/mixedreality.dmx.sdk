@@ -14,9 +14,6 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="*" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="*" />
 	  <PackageReference Include="Microsoft.Identity.Web" Version="1.25.1" />
-	  <Folder Include="Models\Services\Foundations\Artifacts\Exceptions\" />
-	  <Folder Include="Models\Services\Foundations\Commands\" />
-    <Folder Include="Shared\" />
   </ItemGroup>
 
 </Project>
