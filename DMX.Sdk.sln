@@ -4,8 +4,6 @@ VisualStudioVersion = 17.3.32505.426
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Sdk", "DMX.Sdk\DMX.Sdk.csproj", "{1768FB91-AE0B-4EC0-88DD-4A53FB6B5479}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Sdk.Tests.Unit", "DMX.Sdk.Tests.Unit\DMX.Sdk.Tests.Unit.csproj", "{9B09B0F4-5DB5-43DA-9AC5-744353C7D303}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
