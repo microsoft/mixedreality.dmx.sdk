@@ -6,6 +6,5 @@ namespace DMX.Sdk.Brokers.DmxApis
 {
     public partial interface IDmxApiBroker
     {
-
     }
 }

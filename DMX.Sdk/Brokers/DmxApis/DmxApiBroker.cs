@@ -1,24 +1,20 @@
 ﻿// --------------------------------------------------------------- 
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
-
 using RESTFulSense.Clients;
 using System.Net.Http.Headers;
-
 namespace DMX.Sdk.Brokers.DmxApis
 {
     public partial class DmxApiBroker : IDmxApiBroker
     {
-        private HttpClient httpClient;
         private readonly string apiUrl;
         private readonly IRESTFulApiFactoryClient apiClient;
         private readonly string token;
 
-        public DmxApiBroker(HttpClient httpClient,
+        public DmxApiBroker(
             string apiUrl,
             string token)
         {
-            this.httpClient = httpClient;
             this.token = token;
             this.apiUrl = apiUrl;
             this.apiClient = GetApiClient(apiUrl);
@@ -32,10 +28,13 @@ namespace DMX.Sdk.Brokers.DmxApis
 
         private IRESTFulApiFactoryClient GetApiClient(string apiUrl)
         {
-            this.httpClient.DefaultRequestHeaders.Authorization =
+            var httpClient = new HttpClient();
+
+            httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", this.token);
 
             httpClient.BaseAddress = new Uri(apiUrl);
+
             return new RESTFulApiFactoryClient(httpClient);
         }
     }
