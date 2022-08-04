@@ -10,9 +10,7 @@ namespace DMX.Sdk.Brokers.DmxApis
     {
         private const string LabsRelativeUrl = "api/labs";
 
-        public async ValueTask<List<Lab>> GetAllLabsAsync()
-        {
-            return await GetAsync<List<Lab>>(LabsRelativeUrl);
-        }
+        public async ValueTask<List<Lab>> GetAllLabsAsync() =>
+            await GetAsync<List<Lab>>(LabsRelativeUrl);
     }
 }

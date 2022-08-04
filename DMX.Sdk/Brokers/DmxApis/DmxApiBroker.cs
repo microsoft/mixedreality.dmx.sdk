@@ -1,8 +1,10 @@
 ﻿// --------------------------------------------------------------- 
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
+
 using RESTFulSense.Clients;
 using System.Net.Http.Headers;
+
 namespace DMX.Sdk.Brokers.DmxApis
 {
     public partial class DmxApiBroker : IDmxApiBroker
