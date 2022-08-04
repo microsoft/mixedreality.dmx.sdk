@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using RESTFulSense.Clients;
+using System.Net.Http.Headers;
 
 namespace DMX.Sdk.Brokers.DmxApis
 {
@@ -31,6 +32,9 @@ namespace DMX.Sdk.Brokers.DmxApis
 
         private IRESTFulApiFactoryClient GetApiClient(string apiUrl)
         {
+            this.httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", this.token);
+
             httpClient.BaseAddress = new Uri(apiUrl);
             return new RESTFulApiFactoryClient(httpClient);
         }
