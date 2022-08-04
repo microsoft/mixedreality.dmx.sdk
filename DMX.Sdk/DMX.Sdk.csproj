@@ -8,7 +8,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="RESTFulSense" Version="2.7.0" />
-		<PackageReference Include="SharpStyles" Version="0.3.0" />
 		<PackageReference Include="Xeption" Version="2.4.0" />
 	</ItemGroup>
 
