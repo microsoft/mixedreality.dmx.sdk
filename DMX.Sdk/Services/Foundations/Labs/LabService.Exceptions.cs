@@ -43,12 +43,20 @@ namespace DMX.Sdk.Services.Foundations.Labs
 
                 throw CreateAndLogDependencyException(failedLabDependencyException);
             }
+            catch (Exception exception)
+            {
+                var failedLabServiceException = new FailedLabServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLabServiceException);
+            }
         }
 
         private LabDependencyException CreateAndLogCriticalDependencyException(
             FailedLabDependencyException failedLabDependencyException)
         {
-            var labDependencyException = new LabDependencyException(failedLabDependencyException);
+            var labDependencyException =
+                new LabDependencyException(failedLabDependencyException);
+
             this.loggingBroker.LogCritical(labDependencyException);
 
             return labDependencyException;
@@ -57,10 +65,21 @@ namespace DMX.Sdk.Services.Foundations.Labs
         private LabDependencyException CreateAndLogDependencyException(
             FailedLabDependencyException failedLabDependencyException)
         {
-            var labDependencyException = new LabDependencyException(failedLabDependencyException);
+            var labDependencyException =
+                new LabDependencyException(failedLabDependencyException);
+
             this.loggingBroker.LogError(labDependencyException);
 
             return labDependencyException;
+        }
+
+        private LabServiceException CreateAndLogServiceException(
+            FailedLabServiceException exception)
+        {
+            var labServiceException = new LabServiceException(exception);
+            this.loggingBroker.LogError(labServiceException);
+
+            return labServiceException;
         }
     }
 }

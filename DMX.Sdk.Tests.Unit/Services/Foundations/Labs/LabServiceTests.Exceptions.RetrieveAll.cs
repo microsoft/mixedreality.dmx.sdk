@@ -107,11 +107,11 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             string someMessage = GetRandomString();
             var serviceException = new Exception();
 
-            var failedLabDependencyException =
-                new FailedLabDependencyException(serviceException);
+            var failedLabServiceException =
+                new FailedLabServiceException(serviceException);
 
-            var expectedLabDependencyException =
-                new LabDependencyException(failedLabDependencyException);
+            var expectedLabServiceException =
+                new LabServiceException(failedLabServiceException);
 
             this.dmxApiBroker
                 .Setup(broker => broker.GetAllLabsAsync())
@@ -121,12 +121,12 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             ValueTask<List<Lab>> getAllLabsTask =
                 this.labService.RetrieveAllLabsAsync();
 
-            LabDependencyException actualLabDependencyException =
-                await Assert.ThrowsAsync<LabDependencyException>(getAllLabsTask.AsTask);
+            LabServiceException actualLabServiceException =
+                await Assert.ThrowsAsync<LabServiceException>(getAllLabsTask.AsTask);
 
             // then
-            actualLabDependencyException
-                .Should().BeEquivalentTo(expectedLabDependencyException);
+            actualLabServiceException
+                .Should().BeEquivalentTo(expectedLabServiceException);
 
             this.dmxApiBroker
                 .Verify(broker => broker.GetAllLabsAsync(),
@@ -134,7 +134,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
 
             this.loggingBroker
                 .Verify(broker => broker.LogError(
-                    It.Is(SameExceptionAs(expectedLabDependencyException))),
+                    It.Is(SameExceptionAs(expectedLabServiceException))),
                         Times.Once);
 
             this.dmxApiBroker.VerifyNoOtherCalls();
