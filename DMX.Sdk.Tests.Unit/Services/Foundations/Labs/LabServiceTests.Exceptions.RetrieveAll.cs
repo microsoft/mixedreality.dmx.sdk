@@ -7,6 +7,7 @@ using DMX.Sdk.Models.Services.Foundation.Labs.Exceptions;
 using DMX.Sdk.Models.Services.Foundations.Labs;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Exceptions;
 using Xeptions;
 using Xunit;
 
@@ -42,6 +43,49 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
 
             this.loggingBroker
                 .Verify(broker => broker.LogCritical(
+                    It.Is(SameExceptionAs(expectedLabDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBroker.VerifyNoOtherCalls();
+            this.loggingBroker.VerifyNoOtherCalls();
+
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveAllIfErrorOccursLogItAsync()
+        {
+            // given
+            string someMessage = GetRandomString();
+            var responseMessage = new HttpResponseMessage();
+
+            var httpResponseException =
+                new HttpResponseException(responseMessage, someMessage);
+
+            var failedLabDependencyException =
+                new FailedLabDependencyException(httpResponseException);
+
+            var expectedLabDependencyException =
+                new LabDependencyException(failedLabDependencyException);
+
+            this.dmxApiBroker
+                .Setup(broker => broker.GetAllLabsAsync())
+                .ThrowsAsync(httpResponseException);
+
+            // when
+            ValueTask<List<Lab>> getAllLabsTask = this.labService.RetrieveAllLabsAsync();
+
+            LabDependencyException actualLabDependencyException =
+                await Assert.ThrowsAsync<LabDependencyException>(getAllLabsTask.AsTask);
+
+            // then
+            actualLabDependencyException.Should().BeEquivalentTo(expectedLabDependencyException);
+
+            this.dmxApiBroker
+                .Verify(broker => broker.GetAllLabsAsync(),
+                    Times.Once);
+
+            this.loggingBroker
+                .Verify(broker => broker.LogError(
                     It.Is(SameExceptionAs(expectedLabDependencyException))),
                         Times.Once);
 
