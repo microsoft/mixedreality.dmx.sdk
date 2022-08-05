@@ -1,10 +1,17 @@
-﻿using DMX.Sdk.Brokers.DmxApis;
+﻿// --------------------------------------------------------------- 
+// Copyright (c) Microsoft Corporation. All rights reserved. 
+// ---------------------------------------------------------------
+
+using DMX.Sdk.Brokers.DmxApis;
 using DMX.Sdk.Brokers.Loggings;
 using DMX.Sdk.Models.Services.Foundations.Labs;
 using DMX.Sdk.Services.Foundations.Labs;
 using Moq;
+using RESTFulSense.Exceptions;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
-
+using Xeptions;
+using Xunit;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
 {
@@ -13,6 +20,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
         private readonly Mock<IDmxApiBroker> dmxApiBroker;
         private readonly Mock<ILoggingBroker> loggingBroker;
         private readonly ILabService labService;
+
         public LabServiceTests()
         {
             this.dmxApiBroker = new Mock<IDmxApiBroker>();
@@ -22,6 +30,22 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
                 this.loggingBroker.Object);
         }
 
+        public static TheoryData CriticalDependencyException()
+        {
+            string someMessage = GetRandomString();
+            var response = new HttpResponseMessage();
+
+            return new TheoryData<Xeption>()
+            {
+                new HttpResponseUrlNotFoundException(response, someMessage),
+                new HttpResponseUnauthorizedException(response, someMessage),
+                new HttpResponseForbiddenException(response, someMessage)
+            };
+        }
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
+
         private static List<Lab> CreateRandomLabs() =>
             CreateLabsFiller().Create(count: GetRandomNumber()).ToList();
 
@@ -30,5 +54,10 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
+        {
+            return actualExpectedAssertException => actualExpectedAssertException.SameExceptionAs(expectedException);
+        }
     }
 }
