@@ -22,17 +22,26 @@ namespace DMX.Sdk.Services.Foundations.Labs
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
                 var failedLabDependencyException = new FailedLabDependencyException(httpResponseUrlNotFoundException);
+
                 throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
                 var failedLabDependencyException = new FailedLabDependencyException(httpResponseUnauthorizedException);
+
                 throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseForbiddenException httpResponseForbiddenException)
             {
                 var failedLabDependencyException = new FailedLabDependencyException(httpResponseForbiddenException);
+
                 throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
+            }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedLabDependencyException = new FailedLabDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedLabDependencyException);
             }
         }
 
@@ -41,6 +50,15 @@ namespace DMX.Sdk.Services.Foundations.Labs
         {
             var labDependencyException = new LabDependencyException(failedLabDependencyException);
             this.loggingBroker.LogCritical(labDependencyException);
+
+            return labDependencyException;
+        }
+        
+        private LabDependencyException CreateAndLogDependencyException(
+            FailedLabDependencyException failedLabDependencyException)
+        {
+            var labDependencyException = new LabDependencyException(failedLabDependencyException);
+            this.loggingBroker.LogError(labDependencyException);
 
             return labDependencyException;
         }

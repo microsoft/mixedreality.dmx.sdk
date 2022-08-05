@@ -48,7 +48,6 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
 
             this.dmxApiBroker.VerifyNoOtherCalls();
             this.loggingBroker.VerifyNoOtherCalls();
-
         }
 
         [Fact]
