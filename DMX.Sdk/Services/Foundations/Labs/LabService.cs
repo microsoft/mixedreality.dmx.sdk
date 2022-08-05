@@ -23,9 +23,9 @@ namespace DMX.Sdk.Services.Foundations.Labs
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<List<Lab>> RetrieveAllLabsAsync()
+        public async ValueTask<List<Lab>> RetrieveAllLabsAsync()
         {
-            throw new NotImplementedException();
+            return await dmxApiBroker.GetAllLabsAsync();
         }
     }
 }
