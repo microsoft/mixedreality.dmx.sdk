@@ -21,21 +21,26 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             Xeption criticalDependencyException)
         {
             // given
-            var failedLabDependencyException = new FailedLabDependencyException(criticalDependencyException);
-            var expectedLabDependencyException = new LabDependencyException(failedLabDependencyException);
+            var failedLabDependencyException =
+                new FailedLabDependencyException(criticalDependencyException);
+
+            var expectedLabDependencyException =
+                new LabDependencyException(failedLabDependencyException);
 
             this.dmxApiBroker
                 .Setup(broker => broker.GetAllLabsAsync())
                 .ThrowsAsync(criticalDependencyException);
 
             // when
-            ValueTask<List<Lab>> getAllLabsTask = this.labService.RetrieveAllLabsAsync();
+            ValueTask<List<Lab>> getAllLabsTask =
+                this.labService.RetrieveAllLabsAsync();
 
             LabDependencyException actualLabDependencyException = 
                 await Assert.ThrowsAsync<LabDependencyException>(getAllLabsTask.AsTask);
 
             // then
-            actualLabDependencyException.Should().BeEquivalentTo(expectedLabDependencyException);
+            actualLabDependencyException
+                .Should().BeEquivalentTo(expectedLabDependencyException);
 
             this.dmxApiBroker
                 .Verify(broker => broker.GetAllLabsAsync(),
@@ -71,13 +76,15 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
                 .ThrowsAsync(httpResponseException);
 
             // when
-            ValueTask<List<Lab>> getAllLabsTask = this.labService.RetrieveAllLabsAsync();
+            ValueTask<List<Lab>> getAllLabsTask =
+                this.labService.RetrieveAllLabsAsync();
 
             LabDependencyException actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(getAllLabsTask.AsTask);
 
             // then
-            actualLabDependencyException.Should().BeEquivalentTo(expectedLabDependencyException);
+            actualLabDependencyException
+                .Should().BeEquivalentTo(expectedLabDependencyException);
 
             this.dmxApiBroker
                 .Verify(broker => broker.GetAllLabsAsync(),
@@ -91,6 +98,47 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             this.dmxApiBroker.VerifyNoOtherCalls();
             this.loggingBroker.VerifyNoOtherCalls();
 
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnRetrievalIfErrorOccursAndLogItAsync()
+        {
+            // given
+            string someMessage = GetRandomString();
+            var serviceException = new Exception();
+
+            var failedLabDependencyException =
+                new FailedLabDependencyException(serviceException);
+
+            var expectedLabDependencyException =
+                new LabDependencyException(failedLabDependencyException);
+
+            this.dmxApiBroker
+                .Setup(broker => broker.GetAllLabsAsync())
+                .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<List<Lab>> getAllLabsTask =
+                this.labService.RetrieveAllLabsAsync();
+
+            LabDependencyException actualLabDependencyException =
+                await Assert.ThrowsAsync<LabDependencyException>(getAllLabsTask.AsTask);
+
+            // then
+            actualLabDependencyException
+                .Should().BeEquivalentTo(expectedLabDependencyException);
+
+            this.dmxApiBroker
+                .Verify(broker => broker.GetAllLabsAsync(),
+                    Times.Once);
+
+            this.loggingBroker
+                .Verify(broker => broker.LogError(
+                    It.Is(SameExceptionAs(expectedLabDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBroker.VerifyNoOtherCalls();
+            this.loggingBroker.VerifyNoOtherCalls();
         }
     }
 }
