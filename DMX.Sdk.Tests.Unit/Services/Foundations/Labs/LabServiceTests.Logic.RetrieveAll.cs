@@ -17,15 +17,16 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
         {
             // given
             List<Lab> randomLabs = CreateRandomLabs();
-            var returnedLabs = randomLabs;
-            var expectedLabs = randomLabs.DeepClone();
+            List<Lab> returnedLabs = randomLabs;
+            List<Lab> expectedLabs = randomLabs.DeepClone();
 
             this.dmxApiBroker.Setup(broker =>
                 broker.GetAllLabsAsync())
                     .ReturnsAsync(returnedLabs);
 
             // when
-            List<Lab> actualLabs = await this.labService.RetrieveAllLabsAsync();
+            List<Lab> actualLabs = 
+                await this.labService.RetrieveAllLabsAsync();
 
             // then
             actualLabs.Should().BeEquivalentTo(expectedLabs);

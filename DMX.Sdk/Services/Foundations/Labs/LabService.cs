@@ -24,9 +24,6 @@ namespace DMX.Sdk.Services.Foundations.Labs
         }
 
         public ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
-        TryCatch(async () =>
-        {
-            return await dmxApiBroker.GetAllLabsAsync();
-        });
+            TryCatch(async () => { return await dmxApiBroker.GetAllLabsAsync(); });
 }
 }

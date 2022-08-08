@@ -6,6 +6,7 @@ using DMX.Sdk.Models.Services.Foundation.Exceptions;
 using DMX.Sdk.Models.Services.Foundation.Labs.Exceptions;
 using DMX.Sdk.Models.Services.Foundations.Labs;
 using RESTFulSense.Exceptions;
+using Xeptions;
 
 namespace DMX.Sdk.Services.Foundations.Labs
 {
@@ -52,10 +53,10 @@ namespace DMX.Sdk.Services.Foundations.Labs
         }
 
         private LabDependencyException CreateAndLogCriticalDependencyException(
-            FailedLabDependencyException failedLabDependencyException)
+            Xeption exception)
         {
             var labDependencyException =
-                new LabDependencyException(failedLabDependencyException);
+                new LabDependencyException(exception);
 
             this.loggingBroker.LogCritical(labDependencyException);
 
@@ -63,10 +64,10 @@ namespace DMX.Sdk.Services.Foundations.Labs
         }
         
         private LabDependencyException CreateAndLogDependencyException(
-            FailedLabDependencyException failedLabDependencyException)
+            Xeption exception)
         {
             var labDependencyException =
-                new LabDependencyException(failedLabDependencyException);
+                new LabDependencyException(exception);
 
             this.loggingBroker.LogError(labDependencyException);
 
@@ -74,7 +75,7 @@ namespace DMX.Sdk.Services.Foundations.Labs
         }
 
         private LabServiceException CreateAndLogServiceException(
-            FailedLabServiceException exception)
+            Xeption exception)
         {
             var labServiceException = new LabServiceException(exception);
             this.loggingBroker.LogError(labServiceException);

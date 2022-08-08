@@ -2,13 +2,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
+using System.Linq.Expressions;
 using DMX.Sdk.Brokers.DmxApis;
 using DMX.Sdk.Brokers.Loggings;
 using DMX.Sdk.Models.Services.Foundations.Labs;
 using DMX.Sdk.Services.Foundations.Labs;
 using Moq;
 using RESTFulSense.Exceptions;
-using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 using Xeptions;
 using Xunit;
@@ -26,8 +26,9 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             this.dmxApiBroker = new Mock<IDmxApiBroker>();
             this.loggingBroker = new Mock<ILoggingBroker>();
 
-            this.labService = new LabService(this.dmxApiBroker.Object,
-                this.loggingBroker.Object);
+            this.labService = new LabService(
+                dmxApiBroker: this.dmxApiBroker.Object,
+                loggingBroker: this.loggingBroker.Object);
         }
 
         public static TheoryData CriticalDependencyException()
@@ -49,15 +50,13 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
         private static List<Lab> CreateRandomLabs() =>
             CreateLabsFiller().Create(count: GetRandomNumber()).ToList();
 
-        private static Filler<Lab> CreateLabsFiller() =>
-            new Filler<Lab>();
-
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
-        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
-        {
-            return actualExpectedAssertException => actualExpectedAssertException.SameExceptionAs(expectedException);
-        }
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualExpectedAssertException => actualExpectedAssertException.SameExceptionAs(expectedException);
+
+        private static Filler<Lab> CreateLabsFiller() =>
+            new Filler<Lab>();
     }
 }
