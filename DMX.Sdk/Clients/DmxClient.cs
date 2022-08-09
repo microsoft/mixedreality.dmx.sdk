@@ -29,7 +29,5 @@ namespace DMX.Sdk.Clients
 
         public async ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
             await labService.RetrieveAllLabsAsync();
-
-
     }
 }
