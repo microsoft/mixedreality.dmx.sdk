@@ -6,7 +6,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Sdk", "DMX.Sdk\DMX.Sdk.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Sdk.Tests.Unit", "DMX.Sdk.Tests.Unit\DMX.Sdk.Tests.Unit.csproj", "{9B09B0F4-5DB5-43DA-9AC5-744353C7D303}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMX.Sdk.Tests.Acceptance", "DMX.Sdk.Tests.Acceptance\DMX.Sdk.Tests.Acceptance.csproj", "{AFA75D67-2696-4EE0-A663-92BEA6012CCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Sdk.Tests.Acceptance", "DMX.Sdk.Tests.Acceptance\DMX.Sdk.Tests.Acceptance.csproj", "{AFA75D67-2696-4EE0-A663-92BEA6012CCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMX.Sdk.Infrastructure.Build", "DMX.Sdk.Infrastructure.Build\DMX.Sdk.Infrastructure.Build.csproj", "{AC3E4EFB-C775-4053-A892-993A41C8E7D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{AFA75D67-2696-4EE0-A663-92BEA6012CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFA75D67-2696-4EE0-A663-92BEA6012CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFA75D67-2696-4EE0-A663-92BEA6012CCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3E4EFB-C775-4053-A892-993A41C8E7D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3E4EFB-C775-4053-A892-993A41C8E7D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3E4EFB-C775-4053-A892-993A41C8E7D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3E4EFB-C775-4053-A892-993A41C8E7D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
