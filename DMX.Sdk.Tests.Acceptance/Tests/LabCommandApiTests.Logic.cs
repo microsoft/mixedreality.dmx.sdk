@@ -4,6 +4,7 @@
 
 using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using FluentAssertions;
+using Force.DeepCloner;
 using Newtonsoft.Json;
 using System.Net;
 using WireMock.RequestBuilders;
@@ -12,32 +13,33 @@ using Xunit;
 
 namespace DMX.Sdk.Tests.Acceptance.Clients
 {
-    public partial class LabApiTests
+    public partial class LabCommandApiTests
     {
         [Fact]
-        public async Task ShouldGetAllLabsAsync()
+        public async Task ShouldAddLabCommandAsync()
         {
             // given
-            List<Lab> randomLabs = CreateRandomLabs();
-            List<Lab> expectedLabs = randomLabs;
+            LabCommand randomLabCommand = CreateRandomLabCommand();
+            LabCommand inputLabCommand = randomLabCommand;
+            LabCommand expectedLabCommand = randomLabCommand.DeepClone();
 
-            string randomLabsCollectionBody =
-                JsonConvert.SerializeObject(randomLabs);
+            string randomLabCommandCollectionBody =
+                JsonConvert.SerializeObject(randomLabCommand);
 
             this.wireMockServer
                 .Given(Request.Create()
-                    .WithPath("/api/labs")
-                    .UsingGet())
+                    .WithPath("/api/labcommands")
+                    .UsingPost())
                 .RespondWith(Response.Create()
                     .WithStatusCode(HttpStatusCode.OK)
-                    .WithBody(randomLabsCollectionBody));
+                    .WithBody(randomLabCommandCollectionBody));
 
             // when
-            List<Lab> actualLabs =
-                await this.dmxApiBroker.GetAllLabsAsync();
+            LabCommand actualLabCommand =
+                await this.dmxApiBroker.PostLabCommandAsync(inputLabCommand);
 
             // then
-            actualLabs.Should().BeEquivalentTo(expectedLabs);
+            actualLabCommand.Should().BeEquivalentTo(expectedLabCommand);
         }
 
         public void Dispose()
