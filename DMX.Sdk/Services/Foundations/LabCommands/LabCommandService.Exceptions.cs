@@ -50,6 +50,15 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
 
                 throw CreateAndLogDependencyValidationException(invalidLabCommandException);
             }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsLabCommandException =
+                    new AlreadyExistsLabCommandException(
+                        httpResponseConflictException,
+                        httpResponseConflictException.Data);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsLabCommandException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabCommandDependencyException =
