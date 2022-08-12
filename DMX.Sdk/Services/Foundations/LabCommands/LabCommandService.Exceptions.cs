@@ -41,6 +41,15 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
 
                 throw CreateAndLogCriticalDependencyException(failedLabCommandDependencyException);
             }
+            catch (HttpResponseBadRequestException httpResponseBadRequestException)
+            {
+                var invalidLabCommandException =
+                    new InvalidLabCommandException(
+                        httpResponseBadRequestException,
+                        httpResponseBadRequestException.Data);
+
+                throw CreateAndLogDependencyValidationException(invalidLabCommandException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabCommandDependencyException =
@@ -68,6 +77,16 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
             this.loggingBroker.LogCritical(labCommandDependencyException);
 
             return labCommandDependencyException;
+        }
+
+        private LabCommandDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+        {
+            var labCommandDependencyValidationException =
+                new LabCommandDependencyValidationException(exception);
+
+            this.loggingBroker.LogError(labCommandDependencyValidationException);
+
+            return labCommandDependencyValidationException;
         }
 
         private LabCommandValidationException CreateAndLogValidationException(Xeption exception)
