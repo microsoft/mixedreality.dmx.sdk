@@ -70,6 +70,13 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
             {
                 throw CreateAndLogValidationException(nullLabCommandException);
             }
+            catch (Exception exception)
+            {
+                var failedLabCommandServiceException =
+                    new FailedLabCommandServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLabCommandServiceException);
+            }
         }
 
         private Exception CreateAndLogDependencyException(Xeption exception)
@@ -105,6 +112,16 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
 
             return labCommandValidationException;
 
+        }
+
+        private LabCommandServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var labCommandServiceException =
+                new LabCommandServiceException(exception);
+
+            this.loggingBroker.LogError(labCommandServiceException);
+
+            return labCommandServiceException;
         }
     }
 }
