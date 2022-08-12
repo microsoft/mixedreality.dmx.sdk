@@ -38,7 +38,8 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
                 this.labCommandService.AddLabCommandAsync(labCommand);
 
             LabCommandDependencyException actualLabCommandDependencyException =
-                await Assert.ThrowsAsync<LabCommandDependencyException>(returnedLabCommand.AsTask);
+                await Assert.ThrowsAsync<LabCommandDependencyException>(
+                    returnedLabCommand.AsTask);
 
             // then
             actualLabCommandDependencyException

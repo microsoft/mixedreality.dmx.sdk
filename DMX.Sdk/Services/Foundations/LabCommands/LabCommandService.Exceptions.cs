@@ -25,19 +25,26 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
                 var failedLabCommandDependencyException =
                     new FailedLabCommandDependencyException(httpResponseUrlNotFoundException);
 
-                throw CreateAndLogDependencyException(failedLabCommandDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedLabCommandDependencyException);
             }
             catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
                 var failedLabCommandDependencyException =
                     new FailedLabCommandDependencyException(httpResponseUnauthorizedException);
 
-                throw CreateAndLogDependencyException(failedLabCommandDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedLabCommandDependencyException);
             }
             catch (HttpResponseForbiddenException httpResponseForbiddenException)
             {
                 var failedLabCommandDependencyException =
                     new FailedLabCommandDependencyException(httpResponseForbiddenException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabCommandDependencyException);
+            }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedLabCommandDependencyException =
+                    new FailedLabCommandDependencyException(httpResponseException);
 
                 throw CreateAndLogDependencyException(failedLabCommandDependencyException);
             }
@@ -48,6 +55,14 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
         }
 
         private Exception CreateAndLogDependencyException(Xeption exception)
+        {
+            var labCommandDependencyException = new LabCommandDependencyException(exception);
+            this.loggingBroker.LogError(labCommandDependencyException);
+
+            return labCommandDependencyException;
+        }
+
+        private Exception CreateAndLogCriticalDependencyException(Xeption exception)
         {
             var labCommandDependencyException = new LabCommandDependencyException(exception);
             this.loggingBroker.LogCritical(labCommandDependencyException);
