@@ -2,8 +2,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using DMX.Sdk.Brokers.DmxApis;
-using DMX.Sdk.Brokers.Loggings;
 using DMX.Sdk.Models.LabCommands;
 using DMX.Sdk.Models.LabCommands.Exceptions;
 

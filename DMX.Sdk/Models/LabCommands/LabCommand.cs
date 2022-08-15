@@ -2,8 +2,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
-
 namespace DMX.Sdk.Models.LabCommands
 {
     public class LabCommand

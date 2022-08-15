@@ -7,7 +7,6 @@ using Xunit;
 using Xeptions;
 using DMX.Sdk.Models.LabCommands;
 using DMX.Sdk.Models.LabCommands.Exceptions;
-using DMX.Sdk.Models.Services.Foundation.Labs.Exceptions;
 using FluentAssertions;
 using RESTFulSense.Exceptions;
 
@@ -135,12 +134,12 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
                     .ThrowsAsync(httpBadRequestException);
 
             // when
-            ValueTask<LabCommand> postLabCommandTask =
+            ValueTask<LabCommand> addLabCommandTask =
                 this.labCommandService.AddLabCommandAsync(someLabCommand);
 
             LabCommandDependencyValidationException actualLabCommandDependencyValidationException =
                 await Assert.ThrowsAsync<LabCommandDependencyValidationException>(
-                    postLabCommandTask.AsTask);
+                    addLabCommandTask.AsTask);
 
             // then
             actualLabCommandDependencyValidationException.Should()

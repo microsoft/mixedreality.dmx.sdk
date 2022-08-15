@@ -2,8 +2,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using System;
-
 namespace DMX.Sdk.Models.Services.Foundations.Labs
 {
     public class LabDevice
