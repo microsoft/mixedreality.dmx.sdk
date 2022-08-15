@@ -39,10 +39,5 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
             // then
             actualLabs.Should().BeEquivalentTo(expectedLabs);
         }
-
-        public void Dispose()
-        {
-            this.wireMockServer.Stop();
-        }
     }
 }
