@@ -12,5 +12,8 @@ namespace DMX.Sdk.Brokers.DmxApis
 
         public async ValueTask<LabCommand> PostLabCommandAsync(LabCommand labCommand) =>
             await PostAsync(LabCommandsRelativeUrl, labCommand);
+
+        public async ValueTask<LabCommand> GetLabCommandByIdAsync(Guid labCommandId) =>
+            await GetAsync<LabCommand>($"{LabCommandsRelativeUrl}/{labCommandId}");
     }
 }
