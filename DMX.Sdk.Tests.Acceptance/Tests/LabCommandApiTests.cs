@@ -11,7 +11,7 @@ using Xunit;
 namespace DMX.Sdk.Tests.Acceptance.Clients
 {
     [Collection(nameof(ApiTestCollection))]
-    public partial class LabCommandApiTests
+    public partial class LabCommandApiTests : IDisposable
     {
         private readonly DmxApiBroker dmxApiBroker;
         private readonly WireMockServer wireMockServer;
