@@ -4,15 +4,13 @@
 
 using DMX.Sdk.Brokers.DmxApis;
 using DMX.Sdk.Brokers.Loggings;
-using DMX.Sdk.Models.LabCommands;
-using DMX.Sdk.Models.Services.Foundations.Labs;
 using DMX.Sdk.Services.Foundations.LabCommands;
 using DMX.Sdk.Services.Foundations.Labs;
 using Microsoft.Extensions.Logging;
 
 namespace DMX.Sdk.Clients
 {
-    public class DmxClient
+    public partial class DmxClient
     {
         private readonly ILabService labService;
         private readonly ILabCommandService labCommandService;
@@ -30,11 +28,5 @@ namespace DMX.Sdk.Clients
             this.labService = new LabService(dmxApiBroker, loggingBroker);
             this.labCommandService = new LabCommandService(dmxApiBroker, loggingBroker);
         }
-
-        public async ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
-            await labService.RetrieveAllLabsAsync();
-
-        public async ValueTask<LabCommand> SendLabCommandAsync(LabCommand labCommand) =>
-            await labCommandService.AddLabCommandAsync(labCommand);
     }
 }
