@@ -62,7 +62,7 @@ namespace DMX.Sdk.Services.Foundations.Labs
 
             return labDependencyException;
         }
-        
+
         private LabDependencyException CreateAndLogDependencyException(
             Xeption exception)
         {

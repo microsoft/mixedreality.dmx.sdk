@@ -2,9 +2,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
 namespace DMX.Sdk.Models.Services.Foundations.Labs
 {
     public class Lab

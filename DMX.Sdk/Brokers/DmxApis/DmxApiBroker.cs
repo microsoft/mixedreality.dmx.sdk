@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using RESTFulSense.Clients;
 using System.Net.Http.Headers;
+using RESTFulSense.Clients;
 
 namespace DMX.Sdk.Brokers.DmxApis
 {
