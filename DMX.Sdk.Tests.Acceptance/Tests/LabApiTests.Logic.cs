@@ -2,8 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using DMX.Sdk.Models.Services.Foundations.Labs;
-using DMX.Sdk.Tests.Acceptance.Brokers;
+using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System.Net;
@@ -39,11 +38,6 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
 
             // then
             actualLabs.Should().BeEquivalentTo(expectedLabs);
-        }
-
-        public void Dispose()
-        {
-            this.wireMockServer.Stop();
         }
     }
 }

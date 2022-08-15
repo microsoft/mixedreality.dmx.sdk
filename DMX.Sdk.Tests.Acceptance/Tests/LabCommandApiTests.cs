@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using DMX.Sdk.Tests.Acceptance.Brokers;
+using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using Tynamix.ObjectFiller;
 using WireMock.Server;
 using Xunit;
@@ -11,12 +11,12 @@ using Xunit;
 namespace DMX.Sdk.Tests.Acceptance.Clients
 {
     [Collection(nameof(ApiTestCollection))]
-    public partial class LabApiTests : IDisposable
+    public partial class LabCommandApiTests : IDisposable
     {
         private readonly DmxApiBroker dmxApiBroker;
         private readonly WireMockServer wireMockServer;
 
-        public LabApiTests(DmxApiBroker dmxApiBroker)
+        public LabCommandApiTests(DmxApiBroker dmxApiBroker)
         {
             this.dmxApiBroker = dmxApiBroker;
             this.wireMockServer = WireMockServer.Start(1248);
@@ -27,13 +27,20 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
             this.wireMockServer.Stop();
         }
 
-        private static List<Lab> CreateRandomLabs() =>
-            CreateLabsFiller().Create(count: GetRandomNumber()).ToList();
+        private static LabCommand CreateRandomLabCommand() =>
+            CreateLabCommandFiller().Create();
 
-        private static int GetRandomNumber() =>
-            new IntRange(min: 2, max: 10).GetValue();
+        private static DateTimeOffset GetRandomDateTimeOffset() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
-        private static Filler<Lab> CreateLabsFiller() =>
-            new Filler<Lab>();
+        private static Filler<LabCommand> CreateLabCommandFiller()
+        {
+            var filler = new Filler<LabCommand>();
+
+            filler.Setup()
+                .OnType<DateTimeOffset>().Use(GetRandomDateTimeOffset);
+
+            return filler;
+        }
     }
 }

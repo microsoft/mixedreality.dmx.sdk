@@ -8,12 +8,13 @@ namespace DMX.Sdk.Tests.Acceptance.Brokers
 {
     public partial class DmxApiBroker
     {
-        private const string LabsRelativeUrl = "api/labs";
+        private const string LabCommandsRelativeUrl = "api/labcommands";
 
-        public async ValueTask<List<Lab>> GetAllLabsAsync()
+        public async ValueTask<LabCommand> PostLabCommandAsync(LabCommand labCommand)
         {
-            return await this.apiClient.GetContentAsync<List<Lab>>(
-                relativeUrl: $"{LabsRelativeUrl}");
+            return await this.apiClient.PostContentAsync<LabCommand>(
+                relativeUrl: $"{LabCommandsRelativeUrl}",
+                content: labCommand);
         }
     }
 }
