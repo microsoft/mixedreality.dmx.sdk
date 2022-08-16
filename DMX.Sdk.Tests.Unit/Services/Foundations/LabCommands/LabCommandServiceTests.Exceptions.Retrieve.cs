@@ -57,5 +57,52 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
+        {
+            // given
+            LabCommand someLabCommand = CreateRandomLabCommand();
+            Guid someLabCommandId = someLabCommand.Id;
+            string randomMessage = GetRandomString();
+            var httpMessage = new HttpResponseMessage();
+
+            var httpResponseException =
+                new HttpResponseException(httpMessage, randomMessage);
+
+            var failedLabCommandDependencyException
+                = new FailedLabCommandDependencyException(httpResponseException);
+
+            var expectedLabCommandDependencyException =
+                new LabCommandDependencyException(failedLabCommandDependencyException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(httpResponseException);
+
+            // when
+            ValueTask<LabCommand> addLabCommandTask =
+                this.labCommandService.RetrieveLabCommandByIdAsync(someLabCommandId);
+
+            LabCommandDependencyException actualLabCommandDependencyException =
+                await Assert.ThrowsAsync<LabCommandDependencyException>(
+                    addLabCommandTask.AsTask);
+
+            // then
+            actualLabCommandDependencyException.Should()
+                .BeEquivalentTo(expectedLabCommandDependencyException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabCommandDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
