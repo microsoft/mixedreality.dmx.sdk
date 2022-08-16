@@ -34,7 +34,12 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
         {
             ValidateLabCommandId(labCommandId);
 
-            return await this.dmxApiBroker.GetLabCommandByIdAsync(labCommandId);
+            LabCommand maybeLabCommand = 
+            await this.dmxApiBroker.GetLabCommandByIdAsync(labCommandId);
+
+            ValidateIfLabCommandExists(maybeLabCommand, labCommandId);
+
+            return maybeLabCommand;
         });
     }
 }

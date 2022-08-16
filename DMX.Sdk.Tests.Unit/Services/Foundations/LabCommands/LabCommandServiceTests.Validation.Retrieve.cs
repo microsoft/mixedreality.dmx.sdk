@@ -57,7 +57,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
             // given
             Guid invalidId = Guid.NewGuid();
             LabCommand nullLabCommand = null;
-            var notFoundLabCommanException = new NotFoundLabCommandException();
+            var notFoundLabCommanException = new NotFoundLabCommandException(invalidId);
 
             var expectedLabCommandValidationException =
                 new LabCommandValidationException(notFoundLabCommanException);

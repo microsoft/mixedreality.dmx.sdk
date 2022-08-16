@@ -8,8 +8,8 @@ namespace DMX.Sdk.Models.LabCommands.Exceptions
 {
     public class NotFoundLabCommandException : Xeption
     {
-        public NotFoundLabCommandException()
-            : base(message:"Lab command not found. Please try again.")
+        public NotFoundLabCommandException(Guid id)
+            : base(message:$"Lab command not found for {id}. Please try again.")
         {
         }
     }

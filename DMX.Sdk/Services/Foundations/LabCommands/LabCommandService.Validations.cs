@@ -31,5 +31,13 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
                 throw exception;
             }
         }
+
+        private static void ValidateIfLabCommandExists(LabCommand labCommand, Guid labCommandId)
+        {
+            if (labCommand is null)
+            {
+                throw new NotFoundLabCommandException(labCommandId);
+            }
+        }
     }
 }
