@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Text.Json.Serialization.Metadata;
 using DMX.Sdk.Models.LabCommands;
 using DMX.Sdk.Models.LabCommands.Exceptions;
 
@@ -14,6 +15,14 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
             if (labCommand is null)
             {
                 throw new NullLabCommandException();
+            }
+        }
+
+        private static void ValidateLabCommandId(Guid labCommandId)
+        {
+            if (labCommandId == Guid.Empty)
+            {
+                throw new NullLabCommandIdException();
             }
         }
     }

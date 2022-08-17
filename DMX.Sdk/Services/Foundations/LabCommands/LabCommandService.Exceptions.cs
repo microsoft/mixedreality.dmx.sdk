@@ -68,6 +68,10 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
             {
                 throw CreateAndLogValidationException(nullLabCommandException);
             }
+            catch (NullLabCommandIdException nullLabCommandIdException)
+            {
+                throw CreateAndLogValidationException(nullLabCommandIdException);
+            }
             catch (Exception exception)
             {
                 var failedLabCommandServiceException =
