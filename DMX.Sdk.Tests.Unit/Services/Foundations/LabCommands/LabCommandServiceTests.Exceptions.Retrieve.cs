@@ -2,18 +2,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using Moq;
-using Xunit;
-using Xeptions;
 using DMX.Sdk.Models.LabCommands;
 using DMX.Sdk.Models.LabCommands.Exceptions;
 using FluentAssertions;
+using Moq;
 using RESTFulSense.Exceptions;
-using DMX.Sdk.Models.Services.Foundation.Labs.Exceptions;
+using Xeptions;
+using Xunit;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
 {
-public partial class LabCommandServiceTests
+    public partial class LabCommandServiceTests
     {
         [Theory]
         [MemberData(nameof(CriticalDependencyException))]

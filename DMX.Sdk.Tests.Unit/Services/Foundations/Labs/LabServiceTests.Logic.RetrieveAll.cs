@@ -25,7 +25,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
                     .ReturnsAsync(returnedLabs);
 
             // when
-            List<Lab> actualLabs = 
+            List<Lab> actualLabs =
                 await this.labService.RetrieveAllLabsAsync();
 
             // then

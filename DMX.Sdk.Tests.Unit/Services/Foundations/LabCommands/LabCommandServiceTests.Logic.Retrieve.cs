@@ -2,12 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using Moq;
-using Xunit;
-using Xeptions;
 using DMX.Sdk.Models.LabCommands;
 using FluentAssertions;
 using Force.DeepCloner;
+using Moq;
+using Xunit;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
 {

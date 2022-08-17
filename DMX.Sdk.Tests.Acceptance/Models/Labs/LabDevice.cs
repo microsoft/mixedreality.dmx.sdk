@@ -2,8 +2,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using System;
-
 namespace DMX.Sdk.Tests.Acceptance.Models.Labs
 {
     public class LabDevice
