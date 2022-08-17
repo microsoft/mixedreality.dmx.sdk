@@ -9,5 +9,6 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
     public interface ILabCommandService
     {
         ValueTask<LabCommand> AddLabCommandAsync(LabCommand labCommand);
+        ValueTask<LabCommand> RetrieveLabCommandByIdAsync(Guid labCommandId);
     }
 }

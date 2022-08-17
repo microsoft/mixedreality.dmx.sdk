@@ -28,5 +28,10 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
 
             return await this.dmxApiBroker.PostLabCommandAsync(labCommand);
         });
+
+        public ValueTask<LabCommand> RetrieveLabCommandByIdAsync(Guid labCommandId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
