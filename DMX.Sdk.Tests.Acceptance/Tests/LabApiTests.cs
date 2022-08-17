@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using DMX.Sdk.Tests.Acceptance.Brokers;
+using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using Tynamix.ObjectFiller;
 using WireMock.Server;
 using Xunit;

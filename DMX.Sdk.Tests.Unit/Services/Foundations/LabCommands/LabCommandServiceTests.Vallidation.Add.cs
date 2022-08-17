@@ -2,12 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using Moq;
-using Xunit;
-using Xeptions;
 using DMX.Sdk.Models.LabCommands;
 using DMX.Sdk.Models.LabCommands.Exceptions;
 using FluentAssertions;
+using Moq;
+using Xunit;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
 {
@@ -19,10 +18,10 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
             // given
             LabCommand nullLabCommand = null;
             var nullLabCommandException = new NullLabCommandException();
-            
-            var expectedLabCommandValidationException = 
+
+            var expectedLabCommandValidationException =
                 new LabCommandValidationException(nullLabCommandException);
-            
+
             // when
             ValueTask<LabCommand> addLabCommandTask =
                 this.labCommandService.AddLabCommandAsync(nullLabCommand);

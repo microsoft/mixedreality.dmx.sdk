@@ -16,7 +16,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
     public partial class LabServiceTests
     {
         [Theory]
-        [MemberData (nameof(CriticalDependencyException))]
+        [MemberData(nameof(CriticalDependencyException))]
         public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveAllIfCriticalErrorOccursLogItAsync(
             Xeption criticalDependencyException)
         {
@@ -35,7 +35,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             ValueTask<List<Lab>> retrieveAllLabsTask =
                 this.labService.RetrieveAllLabsAsync();
 
-            LabDependencyException actualLabDependencyException = 
+            LabDependencyException actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(retrieveAllLabsTask.AsTask);
 
             // then
@@ -128,11 +128,11 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
             actualLabServiceException
                 .Should().BeEquivalentTo(expectedLabServiceException);
 
-            this.dmxApiBroker.Verify(broker => 
+            this.dmxApiBroker.Verify(broker =>
                 broker.GetAllLabsAsync(),
                     Times.Once);
 
-            this.loggingBroker.Verify(broker => 
+            this.loggingBroker.Verify(broker =>
                 broker.LogError(
                     It.Is(SameExceptionAs(expectedLabServiceException))),
                         Times.Once);

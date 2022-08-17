@@ -2,11 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
+using System.Net;
 using DMX.Sdk.Tests.Acceptance.Models.Labs;
 using FluentAssertions;
 using Force.DeepCloner;
 using Newtonsoft.Json;
-using System.Net;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using Xunit;

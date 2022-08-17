@@ -16,5 +16,13 @@ namespace DMX.Sdk.Services.Foundations.LabCommands
                 throw new NullLabCommandException();
             }
         }
+
+        private static void ValidateLabCommandId(Guid labCommandId)
+        {
+            if (labCommandId == Guid.Empty)
+            {
+                throw new NullLabCommandIdException();
+            }
+        }
     }
 }
