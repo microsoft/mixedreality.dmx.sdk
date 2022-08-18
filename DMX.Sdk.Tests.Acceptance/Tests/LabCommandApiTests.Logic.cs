@@ -50,7 +50,6 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
             Guid randomLabCommandId = randomLabCommand.Id;
             LabCommand expectedLabCommand = randomLabCommand.DeepClone();
 
-
             string randomLabCommandCollectionBody =
                 JsonConvert.SerializeObject(randomLabCommand);
 
