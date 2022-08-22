@@ -10,5 +10,8 @@ namespace DMX.Sdk.Clients
     {
         public async ValueTask<LabCommand> SendLabCommandAsync(LabCommand labCommand) =>
             await labCommandService.AddLabCommandAsync(labCommand);
+
+        public async ValueTask<LabCommand> RetrieveLabCommandByIdAsync(Guid labCommandId) =>
+            await labCommandService.RetrieveLabCommandByIdAsync(labCommandId);
     }
 }
