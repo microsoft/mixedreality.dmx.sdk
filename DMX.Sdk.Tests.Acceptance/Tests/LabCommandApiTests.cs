@@ -2,30 +2,26 @@
 // Copyright (c) Microsoft Corporation. All rights reserved. 
 // ---------------------------------------------------------------
 
-using DMX.Sdk.Tests.Acceptance.Brokers;
-using DMX.Sdk.Tests.Acceptance.Models.Labs;
+using DMX.Sdk.Clients;
+using DMX.Sdk.Models.LabCommands;
 using Tynamix.ObjectFiller;
 using WireMock.Server;
 using Xunit;
 
 namespace DMX.Sdk.Tests.Acceptance.Clients
 {
-    [Collection(nameof(ApiTestCollection))]
     public partial class LabCommandApiTests : IDisposable
     {
-        private readonly DmxApiBroker dmxApiBroker;
+        private readonly DmxClient dmxClient;
         private readonly WireMockServer wireMockServer;
 
-        public LabCommandApiTests(DmxApiBroker dmxApiBroker)
+        public LabCommandApiTests()
         {
-            this.dmxApiBroker = dmxApiBroker;
-            this.wireMockServer = WireMockServer.Start(1248);
+            this.dmxClient = new DmxClient("http://localhost:1249", "");
+            this.wireMockServer = WireMockServer.Start(1249);
         }
 
-        public void Dispose()
-        {
-            this.wireMockServer.Stop();
-        }
+        public void Dispose() => this.wireMockServer.Stop();
 
         private static LabCommand CreateRandomLabCommand() =>
             CreateLabCommandFiller().Create();

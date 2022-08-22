@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Net;
-using DMX.Sdk.Tests.Acceptance.Models.Labs;
+using DMX.Sdk.Models.Services.Foundations.Labs;
 using FluentAssertions;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
@@ -34,7 +34,7 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
 
             // when
             List<Lab> actualLabs =
-                await this.dmxApiBroker.GetAllLabsAsync();
+                await this.dmxClient.Labs.GetAllLabsAsync();
 
             // then
             actualLabs.Should().BeEquivalentTo(expectedLabs);
