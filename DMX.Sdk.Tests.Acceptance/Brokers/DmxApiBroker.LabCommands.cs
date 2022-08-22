@@ -16,5 +16,11 @@ namespace DMX.Sdk.Tests.Acceptance.Brokers
                 relativeUrl: $"{LabCommandsRelativeUrl}",
                 content: labCommand);
         }
+
+        public async ValueTask<LabCommand> GetLabCommandByIdAsync(Guid labCommandId)
+        {
+            return await this.apiClient.GetContentAsync<LabCommand>(
+                relativeUrl: $"{LabCommandsRelativeUrl}/{labCommandId}");
+        }
     }
 }
