@@ -63,7 +63,7 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
 
             // when
             LabCommand actualLabCommand =
-                await this.dmxApiBroker.GetLabCommandByIdAsync(randomLabCommandId);
+                await this.dmxClient.LabCommands.GetLabCommandByIdAsync(randomLabCommandId);
 
             // then
             actualLabCommand.Should().BeEquivalentTo(expectedLabCommand);
