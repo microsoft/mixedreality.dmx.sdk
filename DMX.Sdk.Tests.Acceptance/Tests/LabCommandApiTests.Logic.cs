@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Net;
-using DMX.Sdk.Tests.Acceptance.Models.Labs;
+using DMX.Sdk.Models.LabCommands;
 using FluentAssertions;
 using Force.DeepCloner;
 using Newtonsoft.Json;
@@ -36,7 +36,7 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
 
             // when
             LabCommand actualLabCommand =
-                await this.dmxApiBroker.PostLabCommandAsync(inputLabCommand);
+                await this.dmxClient.LabCommands.SendLabCommandAsync(inputLabCommand);
 
             // then
             actualLabCommand.Should().BeEquivalentTo(expectedLabCommand);
@@ -63,7 +63,7 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
 
             // when
             LabCommand actualLabCommand =
-                await this.dmxApiBroker.GetLabCommandByIdAsync(randomLabCommandId);
+                await this.dmxClient.LabCommands.GetLabCommandByIdAsync(randomLabCommandId);
 
             // then
             actualLabCommand.Should().BeEquivalentTo(expectedLabCommand);

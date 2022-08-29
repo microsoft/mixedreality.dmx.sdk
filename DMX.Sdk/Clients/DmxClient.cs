@@ -12,21 +12,16 @@ namespace DMX.Sdk.Clients
 {
     public partial class DmxClient
     {
-        private readonly ILabService labService;
-        private readonly ILabCommandService labCommandService;
+        public LabCommandClient LabCommands { get; private set; }
+        public LabClient Labs { get; private set; }
 
         public DmxClient(
             string environment,
             string secret)
         {
-            var dmxApiBroker = new DmxApiBroker(environment, secret);
+            this.LabCommands = new LabCommandClient(environment, secret);
 
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            var logger = loggerFactory.CreateLogger<LoggingBroker>();
-            var loggingBroker = new LoggingBroker(logger);
-
-            this.labService = new LabService(dmxApiBroker, loggingBroker);
-            this.labCommandService = new LabCommandService(dmxApiBroker, loggingBroker);
+            this.Labs = new LabClient(environment, secret);
         }
     }
 }
