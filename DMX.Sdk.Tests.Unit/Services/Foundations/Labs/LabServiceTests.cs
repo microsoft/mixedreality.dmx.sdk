@@ -33,14 +33,11 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.Labs
 
         public static TheoryData CriticalDependencyException()
         {
-            string someMessage = GetRandomString();
-            var response = new HttpResponseMessage();
-
             return new TheoryData<Xeption>()
             {
-                new HttpResponseUrlNotFoundException(response, someMessage),
-                new HttpResponseUnauthorizedException(response, someMessage),
-                new HttpResponseForbiddenException(response, someMessage)
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException()
             };
         }
 
