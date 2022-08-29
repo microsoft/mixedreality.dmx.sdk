@@ -62,11 +62,8 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand someLabCommand = CreateRandomLabCommand();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
 
-            var httpResponseException =
-                new HttpResponseException(httpMessage, randomMessage);
+            var httpResponseException = new HttpResponseException();
 
             var failedLabCommandDependencyException
                 = new FailedLabCommandDependencyException(httpResponseException);
@@ -108,16 +105,11 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand someLabCommand = CreateRandomLabCommand();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
 
             Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
 
-            var httpBadRequestException =
-                new HttpResponseBadRequestException(
-                    httpMessage,
-                    randomMessage);
+            var httpBadRequestException = new HttpResponseBadRequestException();
 
             httpBadRequestException.AddData(randomDictionary);
 
@@ -163,16 +155,11 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand randomCommand = CreateRandomLabCommand();
-            string randomString = GetRandomString();
 
             Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
 
-            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
-
-            var httpResponseConflictException = new HttpResponseConflictException(
-                httpResponseMessage,
-                randomString);
+            var httpResponseConflictException = new HttpResponseConflictException();
 
             httpResponseConflictException.AddData(randomDictionary);
 
