@@ -62,14 +62,8 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             Guid labCommandId = Guid.NewGuid();
-            string someMessage = GetRandomString();
 
-            var someResponseMessage = new HttpResponseMessage();
-
-            var httpResponseException =
-                new HttpResponseException(
-                    someResponseMessage,
-                    someMessage);
+            var httpResponseException = new HttpResponseException();
 
             var failedLabCommandDependencyException =
                 new FailedLabCommandDependencyException(httpResponseException);
@@ -111,16 +105,11 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             Guid labCommandId = Guid.NewGuid();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
 
             Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
 
-            var httpBadRequestException =
-                new HttpResponseBadRequestException(
-                    httpMessage,
-                    randomMessage);
+            var httpBadRequestException = new HttpResponseBadRequestException();
 
             httpBadRequestException.AddData(randomDictionary);
 

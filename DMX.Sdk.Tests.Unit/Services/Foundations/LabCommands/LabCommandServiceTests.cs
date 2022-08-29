@@ -33,22 +33,16 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabCommands
 
         public static TheoryData CriticalDependencyException()
         {
-            string someMessage = GetRandomString();
-            var someResponseMessage = new HttpResponseMessage();
-
             return new TheoryData<Xeption>()
             {
-                new HttpResponseUrlNotFoundException(someResponseMessage, someMessage),
-                new HttpResponseUnauthorizedException(someResponseMessage, someMessage),
-                new HttpResponseForbiddenException(someResponseMessage, someMessage),
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException(),
             };
         }
 
         private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
-
-        private static string GetRandomString() =>
-            new MnemonicString().GetValue();
 
         private static LabCommand CreateRandomLabCommand() =>
             CreateLabCommandFiller().Create();
