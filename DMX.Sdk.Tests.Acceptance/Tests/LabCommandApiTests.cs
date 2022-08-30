@@ -21,8 +21,6 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
             this.wireMockServer = WireMockServer.Start(1249);
         }
 
-        public void Dispose() => this.wireMockServer.Stop();
-
         private static LabCommand CreateRandomLabCommand() =>
             CreateLabCommandFiller().Create();
 
@@ -38,5 +36,7 @@ namespace DMX.Sdk.Tests.Acceptance.Clients
 
             return filler;
         }
+
+        public void Dispose() => this.wireMockServer.Stop();
     }
 }
