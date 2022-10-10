@@ -26,7 +26,8 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
                     .ReturnsAsync(returnedLabWorkflow);
 
             // when
-            LabWorkflow actualLabWorkflow = await this.labWorkflowService.AddLabWorkflowAsync(inputLabWorkflow);
+            LabWorkflow actualLabWorkflow = 
+                await this.labWorkflowService.AddLabWorkflowAsync(inputLabWorkflow);
 
             // then
             actualLabWorkflow.Should().BeEquivalentTo(expectedLabWorkflow);
