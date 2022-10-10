@@ -7,7 +7,9 @@ using DMX.Sdk.Brokers.Loggings;
 using DMX.Sdk.Models.LabWorkflows;
 using DMX.Sdk.Services.Foundations.LabWorkflows;
 using Moq;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -26,6 +28,9 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
                 dmxApiBroker: this.dmxApiBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
