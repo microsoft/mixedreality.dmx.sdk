@@ -28,6 +28,12 @@ namespace DMX.Sdk.Brokers.DmxApis
         private async ValueTask<T> PostAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PostContentAsync<T>(relativeUrl, content);
 
+        private async ValueTask<T> UpdateAsync<T>(string relativeUrl, T content) =>
+            await this.apiClient.PutContentAsync<T>(relativeUrl, content);
+
+        private async ValueTask<T> DeleteAsync<T>(string relativeUrl) =>
+            await this.apiClient.DeleteContentAsync<T>(relativeUrl);
+
         private IRESTFulApiFactoryClient GetApiClient(string apiUrl)
         {
             var httpClient = new HttpClient();
