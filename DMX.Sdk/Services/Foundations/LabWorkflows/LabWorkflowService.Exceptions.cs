@@ -4,6 +4,7 @@
 
 using DMX.Sdk.Models.LabWorkflows;
 using DMX.Sdk.Models.LabWorkflows.Exceptions;
+using RESTFulSense.Exceptions;
 using Xeptions;
 
 namespace DMX.Sdk.Services.Foundations.LabWorkflows
@@ -22,6 +23,30 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             {
                 throw CreateAndLogValidationException(nullLabWorkflowException);
             }
+            catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
+            {
+                throw CreateAndLogCriticalDependencyException(httpResponseUrlNotFoundException);
+
+            }
+            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
+            {
+                throw CreateAndLogCriticalDependencyException(httpResponseUnauthorizedException);
+            }
+            catch (HttpResponseForbiddenException httpResponseForbiddenException)
+            {
+                throw CreateAndLogCriticalDependencyException(httpResponseForbiddenException);
+            }
+        }
+
+        private LabWorkflowDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
+        {
+            var failedLabWorkflowDependencyException =
+                new FailedLabWorkflowDependencyException(exception);
+
+            var labWorkflowDependencyException = new LabWorkflowDependencyException(failedLabWorkflowDependencyException);
+            this.loggingBroker.LogCritical(labWorkflowDependencyException);
+
+            return labWorkflowDependencyException;
         }
 
         private LabWorkflowValidationException CreateAndLogValidationException(Xeption nullLabWorkflowException)
