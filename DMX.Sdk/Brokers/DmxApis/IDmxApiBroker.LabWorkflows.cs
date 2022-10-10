@@ -10,5 +10,6 @@ namespace DMX.Sdk.Brokers.DmxApis
     {
         ValueTask<LabWorkflow> PostLabWorkflowAsync(LabWorkflow labWorkflow);
         ValueTask<LabWorkflow> GetLabWorkflowByIdAsync(Guid id);
+        ValueTask<LabWorkflow> UpdateLabWorkflowAsync(LabWorkflow labWorkflow);
     }
 }

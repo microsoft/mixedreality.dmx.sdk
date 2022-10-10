@@ -16,5 +16,8 @@ namespace DMX.Sdk.Brokers.DmxApis
 
         public async ValueTask<LabWorkflow> GetLabWorkflowByIdAsync(Guid id) =>
             await GetAsync<LabWorkflow>($"{LabWorkflowsRelativeUrl}/{id}");
+
+        public async ValueTask<LabWorkflow> UpdateLabWorkflowAsync(LabWorkflow labWorkflow) =>
+            await UpdateAsync(LabWorkflowsRelativeUrl, labWorkflow);
     }
 }
