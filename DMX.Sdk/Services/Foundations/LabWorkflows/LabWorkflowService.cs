@@ -21,7 +21,12 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<LabWorkflow> AddLabWorkflowAsync(LabWorkflow labWorkflow) =>
-            await this.dmxApiBroker.PostLabWorkflowAsync(labWorkflow);
+        public ValueTask<LabWorkflow> AddLabWorkflowAsync(LabWorkflow labWorkflow) =>
+            TryCatch(async () =>
+            {
+                ValidateLabWorkflow(labWorkflow);
+
+                return await this.dmxApiBroker.PostLabWorkflowAsync(labWorkflow);
+            });
     }
 }
