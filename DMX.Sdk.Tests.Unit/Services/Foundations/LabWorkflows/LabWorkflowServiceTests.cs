@@ -7,9 +7,12 @@ using DMX.Sdk.Brokers.Loggings;
 using DMX.Sdk.Models.LabWorkflows;
 using DMX.Sdk.Services.Foundations.LabWorkflows;
 using Moq;
+using RESTFulSense.Exceptions;
 using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
+using Xunit.Sdk;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -27,6 +30,16 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             this.labWorkflowService = new LabWorkflowService(
                 dmxApiBroker: this.dmxApiBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
+        }
+
+        public static TheoryData CriticalDependencyException()
+        {
+            return new TheoryData<Exception>
+            {
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException(),
+            };
         }
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
