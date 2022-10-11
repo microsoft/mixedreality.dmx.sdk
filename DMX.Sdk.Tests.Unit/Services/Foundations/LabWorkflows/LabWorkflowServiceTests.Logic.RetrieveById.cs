@@ -4,6 +4,7 @@
 
 using DMX.Sdk.Models.LabWorkflows;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using Xunit;
 
