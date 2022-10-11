@@ -8,10 +8,7 @@ using Xunit;
 using DMX.Sdk.Models.LabWorkflows;
 using DMX.Sdk.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
-using DMX.Sdk.Models.LabWorkflows.Exceptions;
-using DMX.Sdk.Models.LabWorkflows;
 using RESTFulSense.Exceptions;
-using DMX.Sdk.Services.Foundations.LabWorkflows;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
 {
