@@ -6,6 +6,7 @@ using DMX.Sdk.Models.LabWorkflows;
 using DMX.Sdk.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Exceptions;
 using Xunit;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
@@ -46,6 +47,49 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
+                    expectedLabWorkflowDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveifErrorOccursAndLogItAsync()
+        {
+            // given
+            Guid labWorkflowId = Guid.NewGuid();
+
+            var httpResponseException = new HttpResponseException();
+
+            var failedLabWorkflowDependencyException =
+                new FailedLabWorkflowDependencyException(httpResponseException);
+
+            var expectedLabWorkflowDependencyException =
+                new LabWorkflowDependencyException(failedLabWorkflowDependencyException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetLabWorkflowByIdAsync(labWorkflowId))
+                    .ThrowsAsync(httpResponseException);
+
+            // when
+            ValueTask<LabWorkflow> retrieveLabWorkflowTask =
+                this.labWorkflowService.RetrieveLabWorkflowById(labWorkflowId);
+
+            LabWorkflowDependencyException actualLabWorkflowDependencyException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyException>(
+                    retrieveLabWorkflowTask.AsTask);
+
+            // then
+            actualLabWorkflowDependencyException.Should().BeEquivalentTo(
+                expectedLabWorkflowDependencyException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
                     expectedLabWorkflowDependencyException))),
                         Times.Once);
 
