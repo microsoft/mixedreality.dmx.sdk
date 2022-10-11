@@ -13,10 +13,9 @@ namespace DMX.Sdk.Models.LabWorkflows.Exceptions
 {
     public class LabWorkflowValidationException : Xeption
     {
-        public LabWorkflowValidationException(Xeption innerException) 
+        public LabWorkflowValidationException(Xeption innerException)
             : base(message: "Lab workflow validation error occured. Please fix and try again.",
                   innerException)
-        {
-        }
+        { }
     }
 }

@@ -15,7 +15,6 @@ namespace DMX.Sdk.Models.LabWorkflows.Exceptions
     {
         public NullLabWorkflowException()
             : base(message: "Lab workflow is null.")
-        {
-        }
+        { }
     }
 }

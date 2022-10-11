@@ -26,7 +26,6 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
                 throw CreateAndLogCriticalDependencyException(httpResponseUrlNotFoundException);
-
             }
             catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
@@ -38,9 +37,9 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             }
             catch (HttpResponseBadRequestException httpResponseBadRequestException)
             {
-                var invalidLabWorkflowException = 
+                var invalidLabWorkflowException =
                     new InvalidLabWorkflowException(
-                        httpResponseBadRequestException, 
+                        httpResponseBadRequestException,
                         httpResponseBadRequestException.Data);
 
                 throw CreateAndLogDependencyValidationException(invalidLabWorkflowException);
@@ -56,8 +55,8 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             }
             catch (HttpResponseException httpResponseException)
             {
-                var failedLabWorkflowDependencyException
-                    = new FailedLabWorkflowDependencyException(httpResponseException);
+                var failedLabWorkflowDependencyException =
+                    new FailedLabWorkflowDependencyException(httpResponseException);
 
                 throw CreateAndLogDependencyException(failedLabWorkflowDependencyException);
             }
