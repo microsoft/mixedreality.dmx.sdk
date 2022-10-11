@@ -44,7 +44,15 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
                         httpResponseBadRequestException.Data);
 
                 throw CreateAndLogDependencyValidationException(invalidLabWorkflowException);
+            }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsLabWorkflowException =
+                    new AlreadyExistsLabWorkflowException(
+                        httpResponseConflictException,
+                        httpResponseConflictException.Data);
 
+                throw CreateAndLogDependencyValidationException(alreadyExistsLabWorkflowException);
             }
             catch (HttpResponseException httpResponseException)
             {
