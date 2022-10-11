@@ -29,7 +29,7 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
                 return await this.dmxApiBroker.PostLabWorkflowAsync(labWorkflow);
             });
 
-        public ValueTask<LabWorkflow> RetrieveLabWorkflowById(Guid labWorkflowId) =>
-            throw new NotImplementedException();
+        public async ValueTask<LabWorkflow> RetrieveLabWorkflowById(Guid labWorkflowId) =>
+            await this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
     }
 }
