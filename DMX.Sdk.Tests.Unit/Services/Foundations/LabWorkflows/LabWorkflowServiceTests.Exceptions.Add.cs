@@ -118,8 +118,8 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
                     httpBadRequestException,
                     randomDictionary);
 
-            var expectedLabWorkflowDependencyException =
-                new LabWorkflowDependencyException(invalidPostException);
+            var expectedLabWorkflowDependencyValidationException =
+                new LabWorkflowDependencyValidationException(invalidPostException);
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()))
@@ -129,13 +129,13 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             ValueTask<LabWorkflow> addLabWorkflowTask =
                 this.labWorkflowService.AddLabWorkflowAsync(someLabWorkflow);
 
-            LabWorkflowDependencyException actualLabWorkflowDependencyException =
-                await Assert.ThrowsAsync<LabWorkflowDependencyException>(
+            LabWorkflowDependencyValidationException actualLabWorkflowDependencyValidationException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyValidationException>(
                     addLabWorkflowTask.AsTask);
 
             // then
-            actualLabWorkflowDependencyException.Should().BeEquivalentTo(
-                expectedLabWorkflowDependencyException);
+            actualLabWorkflowDependencyValidationException.Should().BeEquivalentTo(
+                expectedLabWorkflowDependencyValidationException);
 
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()),
@@ -143,7 +143,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedLabWorkflowDependencyException))),
+                    expectedLabWorkflowDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
