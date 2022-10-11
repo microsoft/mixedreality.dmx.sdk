@@ -61,7 +61,13 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
 
                 throw CreateAndLogDependencyException(failedLabWorkflowDependencyException);
             }
-            
+            catch (Exception exception)
+            {
+                var failedLabWorkflowServiceException =
+                    new FailedLabWorkflowServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLabWorkflowServiceException);
+            }
         }
 
         private LabWorkflowDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
@@ -97,6 +103,16 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             this.loggingBroker.LogError(labWorkflowDependencyException);
 
             return labWorkflowDependencyException;
+        }
+
+        private LabWorkflowServiceException CreateAndLogServiceException(FailedLabWorkflowServiceException failedLabWorkflowServiceException)
+        {
+            var labWorkflowServiceException =
+                new LabWorkflowServiceException(failedLabWorkflowServiceException);
+
+            this.loggingBroker.LogError(labWorkflowServiceException);
+
+            return labWorkflowServiceException;
         }
     }
 }
