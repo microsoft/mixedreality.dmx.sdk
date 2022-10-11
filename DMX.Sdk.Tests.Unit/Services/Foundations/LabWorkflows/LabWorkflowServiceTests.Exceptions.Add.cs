@@ -11,6 +11,7 @@ using FluentAssertions;
 using DMX.Sdk.Models.LabWorkflows.Exceptions;
 using DMX.Sdk.Models.LabWorkflows;
 using RESTFulSense.Exceptions;
+using DMX.Sdk.Services.Foundations.LabWorkflows;
 
 namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -193,6 +194,48 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabWorkflowDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfErrorOccursAndLogItAsync()
+        {
+            // given
+            LabWorkflow randomWorkflow = CreateRandomLabWorkflow();
+            var serviceException = new Exception();
+
+            var failedLabWorkflowServiceException =
+                new FailedLabWorkflowServiceException(serviceException);
+
+            var expectedLabWorkflowServiceException =
+                new LabWorkflowServiceException(failedLabWorkflowServiceException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()))
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<LabWorkflow> addLabWorkflowTask =
+                this.labWorkflowService.AddLabWorkflowAsync(randomWorkflow);
+
+            LabWorkflowServiceException actualLabWorkflowServiceException =
+                await Assert.ThrowsAsync<LabWorkflowServiceException>(
+                    addLabWorkflowTask.AsTask);
+
+            // then
+            actualLabWorkflowServiceException.Should().BeEquivalentTo(
+                expectedLabWorkflowServiceException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabWorkflowServiceException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
