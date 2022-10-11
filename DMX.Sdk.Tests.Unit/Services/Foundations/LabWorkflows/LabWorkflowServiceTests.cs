@@ -42,13 +42,13 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             };
         }
 
-        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+        private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
-        private Filler<LabWorkflow> CreateRandomLabWorkflowFiller()
+        private static Filler<LabWorkflow> CreateRandomLabWorkflowFiller()
         {
             var filler = new Filler<LabWorkflow>();
             filler.Setup()
@@ -57,7 +57,13 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             return filler;
         }
 
-        private LabWorkflow CreateRandomLabWorkflow() =>
+        private static LabWorkflow CreateRandomLabWorkflow() =>
             CreateRandomLabWorkflowFiller().Create();
+
+        private static Filler<Dictionary<string, List<string>>> CreateDictionaryFiller() =>
+            new Filler<Dictionary<string, List<string>>>();
+
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
+            CreateDictionaryFiller().Create();
     }
 }

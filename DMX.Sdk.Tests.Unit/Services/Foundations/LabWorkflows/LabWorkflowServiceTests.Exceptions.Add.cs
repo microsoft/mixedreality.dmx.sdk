@@ -100,5 +100,54 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfBadRequestErrorOccursAndLogItAsync()
+        {
+            // given
+            LabWorkflow someLabWorkflow = CreateRandomLabWorkflow();
+
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var httpBadRequestException = new HttpResponseBadRequestException();
+            httpBadRequestException.AddData(randomDictionary);
+
+            var invalidPostException =
+                new InvalidLabWorkflowException(
+                    httpBadRequestException,
+                    randomDictionary);
+
+            var expectedLabWorkflowDependencyException =
+                new LabWorkflowDependencyException(invalidPostException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()))
+                    .ThrowsAsync(httpBadRequestException);
+
+            // when
+            ValueTask<LabWorkflow> addLabWorkflowTask =
+                this.labWorkflowService.AddLabWorkflowAsync(someLabWorkflow);
+
+            LabWorkflowDependencyException actualLabWorkflowDependencyException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyException>(
+                    addLabWorkflowTask.AsTask);
+
+            // then
+            actualLabWorkflowDependencyException.Should().BeEquivalentTo(
+                expectedLabWorkflowDependencyException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabWorkflowDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
