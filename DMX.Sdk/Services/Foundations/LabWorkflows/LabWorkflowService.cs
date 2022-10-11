@@ -33,6 +33,7 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             TryCatch(async () =>
             {
                 ValidateLabWorkflowId(labWorkflowId);
+
                 return await this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
             });
     }
