@@ -11,7 +11,6 @@ namespace DMX.Sdk.Models.LabWorkflows.Exceptions
         public FailedLabWorkflowServiceException(Exception innerException)
             : base(message: "Failed lab workflow error occured. Please contact support.",
                   innerException)
-        {
-        }
+        { }
     }
 }

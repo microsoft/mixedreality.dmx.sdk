@@ -11,7 +11,6 @@ namespace DMX.Sdk.Models.LabWorkflows.Exceptions
         public LabWorkflowServiceException(Xeption innerException)
             : base(message: "Lab workflow service error occured. Please contact support.",
                   innerException)
-        {
-        }
+        { }
     }
 }

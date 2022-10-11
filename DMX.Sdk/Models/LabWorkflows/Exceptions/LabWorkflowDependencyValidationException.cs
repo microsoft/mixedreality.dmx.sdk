@@ -11,7 +11,6 @@ namespace DMX.Sdk.Models.LabWorkflows.Exceptions
         public LabWorkflowDependencyValidationException(Xeption innerException)
             : base(message: "Lab workflow dependency validation error occurred. Please contact support.",
                   innerException)
-        {
-        }
+        { }
     }
 }

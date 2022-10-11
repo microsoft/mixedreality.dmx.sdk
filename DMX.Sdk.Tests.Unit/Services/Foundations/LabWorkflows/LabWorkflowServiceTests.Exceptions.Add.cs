@@ -64,8 +64,8 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             LabWorkflow someLabWorkflow = CreateRandomLabWorkflow();
             var httpResponseException = new HttpResponseException();
 
-            var failedLabWorkflowDependencyException
-                = new FailedLabWorkflowDependencyException(httpResponseException);
+            var failedLabWorkflowDependencyException =
+                new FailedLabWorkflowDependencyException(httpResponseException);
 
             var expectedLabWorkflowDependencyException =
                 new LabWorkflowDependencyException(failedLabWorkflowDependencyException);

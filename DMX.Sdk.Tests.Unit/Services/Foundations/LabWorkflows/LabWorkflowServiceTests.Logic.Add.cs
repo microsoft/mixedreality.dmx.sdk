@@ -18,7 +18,7 @@ namespace DMX.Sdk.Tests.Unit.Services.Foundations.LabWorkflows
             // given
             LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
             LabWorkflow inputLabWorkflow = randomLabWorkflow;
-            LabWorkflow returnedLabWorkflow = inputLabWorkflow.DeepClone();
+            LabWorkflow returnedLabWorkflow = inputLabWorkflow;
             LabWorkflow expectedLabWorkflow = inputLabWorkflow.DeepClone();
 
             this.dmxApiBrokerMock.Setup(broker =>
