@@ -36,6 +36,21 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             {
                 throw CreateAndLogCriticalDependencyException(httpResponseForbiddenException);
             }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedLabWorkflowDependencyException
+                    = new FailedLabWorkflowDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedLabWorkflowDependencyException);
+            }
+        }
+
+        private LabWorkflowValidationException CreateAndLogValidationException(Xeption nullLabWorkflowException)
+        {
+            var labWorkflowValidationException = new LabWorkflowValidationException(nullLabWorkflowException);
+            this.loggingBroker.LogError(labWorkflowValidationException);
+
+            return labWorkflowValidationException;
         }
 
         private LabWorkflowDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
@@ -49,12 +64,12 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
             return labWorkflowDependencyException;
         }
 
-        private LabWorkflowValidationException CreateAndLogValidationException(Xeption nullLabWorkflowException)
+        private LabWorkflowDependencyException CreateAndLogDependencyException(Xeption exception)
         {
-            var labWorkflowValidationException = new LabWorkflowValidationException(nullLabWorkflowException);
-            this.loggingBroker.LogError(labWorkflowValidationException);
+            var labWorkflowDependencyException = new LabWorkflowDependencyException(exception);
+            this.loggingBroker.LogError(labWorkflowDependencyException);
 
-            return labWorkflowValidationException;
+            return labWorkflowDependencyException;
         }
     }
 }
