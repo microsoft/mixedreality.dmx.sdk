@@ -29,7 +29,11 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
                 return await this.dmxApiBroker.PostLabWorkflowAsync(labWorkflow);
             });
 
-        public async ValueTask<LabWorkflow> RetrieveLabWorkflowById(Guid labWorkflowId) =>
-            await this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
+        public ValueTask<LabWorkflow> RetrieveLabWorkflowById(Guid labWorkflowId) =>
+            TryCatch(async () =>
+            {
+                ValidateLabWorkflowId(labWorkflowId);
+                return await this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
+            });
     }
 }
