@@ -19,5 +19,10 @@ namespace DMX.Sdk.Models.LabWorkflows
         public DateTimeOffset CreatedDate { get; set; }
         public DateTimeOffset UpdatedDate { get; set; }
         public string Results { get; set; }
+
+        public LabWorkflow DeepClone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
