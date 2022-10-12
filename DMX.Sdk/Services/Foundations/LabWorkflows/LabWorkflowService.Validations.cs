@@ -16,5 +16,13 @@ namespace DMX.Sdk.Services.Foundations.LabWorkflows
                 throw new NullLabWorkflowException();
             }
         }
+
+        public void ValidateLabWorkflowId(Guid labWorkflowId)
+        {
+            if (labWorkflowId == Guid.Empty)
+            {
+                throw new NullLabWorkflowException();
+            }
+        }
     }
 }
