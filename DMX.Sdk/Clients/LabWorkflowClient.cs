@@ -29,5 +29,8 @@ namespace DMX.Sdk.Clients
 
         public async ValueTask<LabWorkflow> SendLabWorkflowAsync(LabWorkflow labWorkflow) =>
             await labWorkflowService.AddLabWorkflowAsync(labWorkflow);
+
+        public async ValueTask<LabWorkflow> GetLabWorkflowByIdAsync(Guid labWorkflowId) =>
+            await labWorkflowService.RetrieveLabWorkflowById(labWorkflowId);
     }
 }
