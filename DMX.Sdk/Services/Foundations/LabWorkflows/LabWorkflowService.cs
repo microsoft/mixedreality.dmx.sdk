@@ -8,7 +8,7 @@ using DMX.Sdk.Models.LabWorkflows;
 
 namespace DMX.Sdk.Services.Foundations.LabWorkflows
 {
-    public partial class LabWorkflowService
+    public partial class LabWorkflowService : ILabWorkflowService
     {
         private readonly IDmxApiBroker dmxApiBroker;
         private readonly ILoggingBroker loggingBroker;
