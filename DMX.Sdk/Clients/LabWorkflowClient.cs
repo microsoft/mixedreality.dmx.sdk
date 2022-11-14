@@ -19,15 +19,16 @@ namespace DMX.Sdk.Clients
             string secret)
         {
             var dmxApiBroker = new DmxApiBroker(environment, secret);
-
             ILoggerFactory loggerFactory = new LoggerFactory();
             var logger = loggerFactory.CreateLogger<LoggingBroker>();
             var loggingBroker = new LoggingBroker(logger);
-
             this.labWorkflowService = new LabWorkflowService(dmxApiBroker, loggingBroker);
         }
 
         public async ValueTask<LabWorkflow> SendLabWorkflowAsync(LabWorkflow labWorkflow) =>
             await labWorkflowService.AddLabWorkflowAsync(labWorkflow);
+
+        public async ValueTask<LabWorkflow> GetLabWorkflowByIdAsync(Guid labWorkflowId) =>
+            await labWorkflowService.RetrieveLabWorkflowById(labWorkflowId);
     }
 }
